@@ -46,4 +46,19 @@ angular
             $event.rSeconds = parseInt(remaining - ($event.rDays*60*60*24) - ($event.rHours*60*60) - ($event.rMinutes*60));
         },1000;
 
+        oc.eventExpired = function ($event,nTime,nDate) {
+            let i;
+            const Nowtime = new Date();
+            const nowTime = Nowtime.toLocaleDateString();
+
+            let deleteEv = document.getElementById('deleteItem');
+
+            for (i = 0; i < $event.length; i++) {
+                if (($event[i].nTime.toLocaleTimeString() <= nowTime) &&
+                    ($event[i].nDate.toLocaleDateString() == $event.myDate.toLocaleDateString())) {
+                    deleteEv.click();
+                }
+            }
+        };
+
     });
