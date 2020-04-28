@@ -35,6 +35,15 @@ angular
             event[field] = !event[field];
         };
 
+        oc.interval = function ($event) {
 
+            let expireDate = 18360 * 24 * 60 * 60;
+            let nTime = Math.floor(Date.now()/1000);
+            let remaining = expireDate - nTime;
+            $event.rDays = parseInt(remaining/60/60/24);
+            $event.rHours = parseInt((remaining - ($event.rDays*60*60*24))/60/60);
+            $event.rMinutes = parseInt((remaining - ($event.rDays*60*60*24) - ($event.rHours*60*60))/60);
+            $event.rSeconds = parseInt(remaining - ($event.rDays*60*60*24) - ($event.rHours*60*60) - ($event.rMinutes*60));
+        },1000;
 
     });
