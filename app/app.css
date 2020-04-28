@@ -1,0 +1,54 @@
+.main{
+  background-image: url("calender/image.jpg");
+  overflow: hidden;
+  background-size: cover;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.form{
+  height:75%;
+  width: 48%;
+  position:fixed;
+  z-index: 1;
+  top: 25%;
+  overflow-x: hidden;
+  border-radius: 10px;
+}
+.right{
+  right: 20px;
+  background-color: blanchedalmond;
+  border-style: solid;
+}
+.left{
+  left: 25px;
+  background-color:rebeccapurple;
+  border-style: solid;
+}
+.calender{
+  background: transparent;
+  width: 650px;
+  height: 550px;
+  border-radius: 10px;
+  position: center;
+  border-style: solid;
+}
+.topic{
+  color: goldenrod;
+  position: center;
+}
+.T1{
+  color: black;
+}
+.T2{
+  color: white;
+}
+.table{
+  background: transparent;
+  width: 600px;
+  left: 20px;
+}
+.pra{
+  color: ivory;
+}
+

@@ -1,0 +1,43 @@
+
+<br>
+<div class="row">
+
+    <div class="col-md-6 text-center">
+        <div class="btn-group">
+
+            <span
+                    class="btn btn-primary"
+                    mwl-date-modifier
+                    date="oc.viewDate"
+                    decrement="oc.calendarView">
+                <i class="fa fa-chevron-circle-left fa-2x" aria-hidden="true"></i>
+            </span>
+            <span
+                    class="btn btn-default"
+                    mwl-date-modifier
+                    date="oc.viewDate"
+                    set-to-today>
+                Today
+            </span>
+            <span
+                    class="btn btn-primary"
+                    mwl-date-modifier
+                    date="oc.viewDate"
+                    increment="oc.calendarView">
+                <i class="fa fa-chevron-circle-right fa-2x" aria-hidden="true" ></i>
+            </span>
+        </div>
+    </div>
+
+    <br class="visible-xs visible-sm">
+
+    <div class="col-md-6 text-center">
+        <div class="btn-group">
+            <label class="btn btn-primary" ng-model="oc.calendarView" uib-btn-radio="'month'">Month</label>
+            <label class="btn btn-primary" ng-model="oc.calendarView" uib-btn-radio="'day'">Day</label>
+        </div>
+    </div>
+
+</div>
+<br>
+    

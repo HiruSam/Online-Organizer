@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html ng-app="OnlineOrganizer" xmlns="http://www.w3.org/1999/html">
+<head>
+  <title>My Online Organizer</title>
+  <script src="https://unpkg.com/moment@2.17.1"></script>
+  <script src="https://unpkg.com/interactjs@1"></script>
+  <script src="https://unpkg.com/angular@1.6.6/angular.js"></script>
+  <script src="https://unpkg.com/angular-animate@1.6.6/angular-animate.js"></script>
+  <script src="https://unpkg.com/angular-ui-bootstrap@2/dist/ui-bootstrap-tpls.js"></script>
+  <script src="https://unpkg.com/rrule@2"></script>
+  <script src="https://unpkg.com/angular-bootstrap-colorpicker@3"></script>
+  <script src="https://unpkg.com/angular-bootstrap-calendar"></script>
+  <link href="https://unpkg.com/bootstrap@3/dist/css/bootstrap.css" rel="stylesheet">
+  <link href="https://unpkg.com/angular-bootstrap-colorpicker@3/css/colorpicker.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">
+  <script src="app.js"></script>
+  <script src="calender/calender.js"></script>
+  <script src="https://kit.fontawesome.com/9c5e368430.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="app.css">
+
+</head>
+<body>
+<div ng-controller="OnlineController as oc">
+  <div class="main">
+    <h1 class="topic text-center ">Online Organizer</h1>
+    <h3 class="pra text-center">.... Save Your Day & Make You Free ....</h3>
+    <h5 class="T2 text-center"> Next Event: {{rDays}} days {{rHours}} hours {{rMinutes}} minutes {{rSeconds}} seconds </h5>
+    <div class="form left">
+      <h3 class="T2 text-center">
+        Event List
+      </h3>
+      <h4 class="T1 text-center">
+        <button
+                class="btn btn-secondary"
+                style="color: green"
+                ng-click="oc.addEvent()">
+          <i class="fa fa-plus fa-1x" aria-hidden="true"> Add New Event</i>
+        </button>
+        <div class="clearfix"></div>
+      </h4>
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Event Name</th>
+          <th>Starts Event</th>
+          <th>Ends Event</th>
+          <th>Delete Event</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="event in oc.events track by $index">
+          <td>
+            <input
+                    type="text"
+                    class="form-control"
+                    ng-model="event.title">
+          </td>
+          <td>
+            <p class="input-group" style="max-width: 150px">
+              <input
+                      type="text"
+                      class="form-control"
+                      readonly
+                      uib-datepicker-popup="dd MMMM yyyy"
+                      ng-model="event.startsAt"
+                      is-open="event.startOpen"
+                      close-text="Close" >
+
+              <span class="input-group-btn">
+                      <button
+                              type="button"
+                              class="btn btn-default"
+                              ng-click="oc.toggle($event, 'startOpen', event)">
+                          <i class="glyphicon glyphicon-calendar"></i>
+                      </button>
+                    </span>
+            </p>
+            <div
+                    uib-timepicker
+                    ng-model="event.startsAt"
+                    hour-step="1"
+                    minute-step="1"
+                    show-meridian="true">
+            </div>
+          </td>
+          <td>
+            <p class="input-group" style="max-width: 150px">
+              <input
+                      type="text"
+                      class="form-control"
+                      readonly
+                      uib-datepicker-popup="dd MMMM yyyy"
+                      ng-model="event.endsAt"
+                      is-open="event.endOpen"
+                      close-text="Close">
+              <span class="input-group-btn">
+                      <button
+                              type="button"
+                              class="btn btn-default"
+                              ng-click="oc.toggle($event, 'endOpen', event)">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                      </button>
+                    </span>
+            </p>
+            <div
+                    uib-timepicker
+                    ng-model="event.endsAt"
+                    hour-step="1"
+                    minute-step="1"
+                    show-meridian="true">
+            </div>
+          </td>
+          <td>
+                  <span style="color:darkred",
+                        ng-click="oc.events.splice($index, 1)">
+                    <i class="fas fa-trash-alt fa-1x">  Remove</i>
+                  </span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+<!--  Left Side-->
+    <div class="form right ">
+      <div>
+        <h2 class="text-center">{{ oc.calendarTitle }}</h2>
+      </div>
+      <div class="size">
+      </br>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="btn-group">
+                <span style="color:gray"
+                      mwl-date-modifier
+                      date="oc.viewDate"
+                      decrement="oc.calendarView"
+                      ng-click="oc.cellIsOpen = false">
+                      <i class="fa fa-chevron-circle-left fa-2x" aria-hidden="true"></i>
+                </span>
+                <span style="color:dodgerblue; font-size: large"
+                      mwl-date-modifier
+                      date="oc.viewDate"
+                      set-to-today
+                      ng-click="oc.cellIsOpen = false">
+                      <i class="fa fa-calendar fa-1x" aria-hidden="true"></i>
+                        Today
+                </span>
+                <span style="color:gray"
+                      mwl-date-modifier
+                      date="oc.viewDate"
+                      increment="oc.calendarView"
+                      ng-click="oc.cellIsOpen = false">
+                      <i class="fa fa-chevron-circle-right fa-2x" aria-hidden="true" ></i>
+                </span>
+          </div>
+          <div class="btn-group col-md-7">
+            <label class="btn btn-primary" ng-model="oc.calendarView" uib-btn-radio="'month'" ng-click="oc.cellIsOpen = false">Month</label>
+            <label class="btn btn-primary" ng-model="oc.calendarView" uib-btn-radio="'day'" ng-click="oc.cellIsOpen = false">Day</label>
+          </div>
+        </div>
+        <br class="visible-xs visible-sm">
+      </div>
+      </br>
+      <div class="calender">
+          <mwl-calendar
+                  events="oc.events"
+                  view="oc.calendarView"
+                  view-title="oc.calendarTitle"
+                  view-date="oc.viewDate"
+                  on-event-click="oc.eventClicked(calendarEvent)"
+                  on-event-times-changed="oc.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                  cell-is-open="oc.cellIsOpen"
+                  day-view-start="00:00"
+                  day-view-end="23:59"
+                  day-view-split="30"
+                  cell-modifier="oc.modifyCell(calendarCell)">
+          </mwl-calendar>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
